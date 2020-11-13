@@ -46,36 +46,33 @@ async function handleEvent(event) {
   });
 }
 
-const isArticle = (userId, word, token, option = "") => {
+const isArticle = (userId, word, token) => {
+  let words = word.split(" ");
+  let option = words.length > 1 ? words[1] : "";
   wiki
-    .page(word)
+    .page(words[0])
     .then(() => {
       option
-        ? getDescriptionV2(userId, word, option)
-        : getDescriptionV2(userId, word);
+        ? getDescriptionV2(userId, words[0], option)
+        : getDescriptionV2(userId, words[0]);
     })
     .catch((err) => {
       console.log("err---" + err);
-      notArticle(userId, word, token);
+      notArticle(userId, words[0], token);
     });
 };
 
 const notArticle = (userId, word, token) => {
-  // new line.Client(config).replyMessage(token, {
-  //   type: "text",
-  //   text: `err 記事が見つかりませんでした。\nhttps://ja.wikipedia.org/wiki/${word}`, //実際に返信の言葉を入れる箇所
-  // });
-
   client.pushMessage(userId, {
     type: "text",
-    text: `err 記事が見つかりませんでした。\nhttps://ja.wikipedia.org/wiki/${word}`,
+    text: `記事が見つかりませんでした。\nhttps://ja.wikipedia.org/wiki/${word}`,
   });
 };
 
 const getDescriptionV2 = async (userId, word, option = "") => {
   // 変数宣言 -----
   const page = await wiki.page(word);
-  const summary = await page.summary(); // 概要
+  const summary = await page.summary();
   let content = await page.content();
   let titleList = [];
   let responseText = "";
@@ -92,6 +89,18 @@ const getDescriptionV2 = async (userId, word, option = "") => {
     }
     return arr;
   };
+
+  const searchSample = (arr, word, removeContent = "") => {
+    let str = removeContent
+      ? `\nその他の検索の例:\n${word}\n`
+      : `\nその他の検索の例:\n`;
+    // let str = `\nその他の検索の例:\n${word}\n`;
+    arr.forEach((el) => {
+      if (removeContent == el) return;
+      str += `${word} ${el}\n`;
+    });
+    return str;
+  };
   // -----
 
   // 処理 -----
@@ -107,18 +116,31 @@ const getDescriptionV2 = async (userId, word, option = "") => {
 
   if (!option) {
     if (summary) {
-      responseText = summary.trim();
-      console.log(responseText);
-      console.log(content[0].title);
-      console.log(content[0].content);
+      responseText = `${summary.trim()}\nhttps://ja.wikipedia.org/wiki/${word}`;
+      if (titleList.length) {
+        responseText += `\n${searchSample(titleList, word)}`;
+      }
     }
   } else {
     const searchOption = (option) => {
       const i = titleList.indexOf(option);
-      i !== -1 ? console.log(content[i]) : console.log(`${option} not found`);
+      if (i !== -1) {
+        responseText = `${word} ${content[i].title}:\n${content[i].content}`;
+        if (titleList.length) {
+          responseText += `\n${searchSample(titleList, word, option)}`;
+        }
+      } else {
+        responseText = `${word} ${option}はありませんでした。`;
+        if (titleList.length) {
+          responseText += `\n${searchSample(titleList, word)}`;
+        }
+      }
+      // i !== -1 ? console.log(content[i]) : console.log(`${option} not found`);
     };
-
-    content.length ? searchOption(option) : console.log("not content");
+    // content.length ? searchOption(option) : console.log("no content");
+    content.length
+      ? searchOption(option)
+      : (responseText = `${word} ${option}はありませんでした。`);
   }
 
   console.log(`https://ja.wikipedia.org/wiki/${word}`);

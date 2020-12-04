@@ -24,7 +24,7 @@
   LINE Developers Message API 設定:
   https://developers.line.biz/console/channel/1655190346/messaging-api
 
-  デプロイ用 URL: https://linebot-dun.vercel.app
+  デプロイ用 URL: https://linebot.vercelsample.vercel.app/webhook
 
 - プログラムを更新したら下記のコマンドでデプロイする
 - vercel deploy command

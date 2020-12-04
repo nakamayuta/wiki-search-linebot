@@ -78,15 +78,21 @@ const getDescriptionV2 = async (userId, word, option = "") => {
   let responseText = "";
   // 整形
   const removeContent = (arr) => {
-    for (let i = 0; i < arr.length; i++) {
-      if (
-        arr[i].title == "外部リンク" ||
-        arr[i].title == "脚注" ||
-        arr[i].title == "関連項目"
-      ) {
+    arr.forEach((el, i) => {
+      if (el.title === "脚注") {
         arr.splice(i, 1);
       }
-    }
+    });
+    arr.forEach((el, i) => {
+      if (el.title === "関連項目") {
+        arr.splice(i, 1);
+      }
+    });
+    arr.forEach((el, i) => {
+      if (el.title === "外部リンク") {
+        arr.splice(i, 1);
+      }
+    });
     return arr;
   };
 
@@ -94,7 +100,6 @@ const getDescriptionV2 = async (userId, word, option = "") => {
     let str = removeContent
       ? `\nその他の検索の例:\n${word}\n`
       : `\nその他の検索の例:\n`;
-    // let str = `\nその他の検索の例:\n${word}\n`;
     arr.forEach((el) => {
       if (removeContent == el) return;
       str += `${word} ${el}\n`;
@@ -107,8 +112,9 @@ const getDescriptionV2 = async (userId, word, option = "") => {
   content = removeContent(content);
   if (content.length) {
     titleList = content.map((el) => el.title);
-    content.forEach((el, i) => {
+    content.forEach((el, i, arr) => {
       if (!el.content && !el.items) {
+        arr.splice(i, 1);
         titleList.splice(i, 1);
       }
     });
@@ -135,9 +141,7 @@ const getDescriptionV2 = async (userId, word, option = "") => {
           responseText += `\n${searchSample(titleList, word)}`;
         }
       }
-      // i !== -1 ? console.log(content[i]) : console.log(`${option} not found`);
     };
-    // content.length ? searchOption(option) : console.log("no content");
     content.length
       ? searchOption(option)
       : (responseText = `${word} ${option}はありませんでした。`);

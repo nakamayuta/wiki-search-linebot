@@ -75,8 +75,8 @@ const getDescriptionV2 = async (userId, word, option = "") => {
   console.log(escape(word));
   const page = await wiki.page(word);
   const summary = await page.summary();
-  let content = await page.content();
   console.log(summary);
+  let content = await page.content();
   console.log(`https://ja.wikipedia.org/wiki/${word}`);
   let titleList = [];
   let responseText = "";

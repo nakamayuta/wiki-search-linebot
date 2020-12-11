@@ -50,7 +50,7 @@ const isArticle = (userId, word, token) => {
   let words = word.split(" ");
   let option = words.length > 1 ? words[1] : "";
   wiki
-    .page(words[0])
+    .page(escape(words[0]))
     .then(() => {
       option
         ? getDescriptionV2(userId, words[0], option)

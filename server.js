@@ -158,4 +158,5 @@ const getDescriptionV2 = async (userId, word, option = "") => {
 };
 
 process.env.NOW_REGION ? (module.exports = app) : app.listen(process.env.PORT);
+// process.env.NOW_REGION ? (module.exports = app) : app.listen(PORT);
 console.log(`Server running at ${PORT}`);

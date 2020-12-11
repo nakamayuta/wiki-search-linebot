@@ -50,7 +50,7 @@ const isArticle = (userId, word, token) => {
   let words = word.split(" ");
   let option = words.length > 1 ? words[1] : "";
   wiki
-    .page(escape(words[0]))
+    .page(words[0])
     .then(() => {
       option
         ? getDescriptionV2(userId, words[0], option)
@@ -71,7 +71,7 @@ const notArticle = (userId, word, token) => {
 
 const getDescriptionV2 = async (userId, word, option = "") => {
   // 変数宣言 -----
-  const page = await wiki.page(word);
+  const page = await wiki.page(escape(word));
   const summary = await page.summary();
   let content = await page.content();
   let titleList = [];

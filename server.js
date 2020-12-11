@@ -75,9 +75,8 @@ const getDescriptionV2 = async (userId, word, option = "") => {
   console.log(escape(word));
   const page = await wiki.page(word);
   const summary = await page.summary();
-  console.log(summary);
   let content = await page.content();
-  console.log(`https://ja.wikipedia.org/wiki/${word}`);
+  // console.log(`https://ja.wikipedia.org/wiki/${word}`);
   let titleList = [];
   let responseText = "";
   // 整形
@@ -161,6 +160,6 @@ const getDescriptionV2 = async (userId, word, option = "") => {
   });
 };
 
-process.env.NOW_REGION ? (module.exports = app) : app.listen(process.env.PORT);
-// process.env.NOW_REGION ? (module.exports = app) : app.listen(PORT);
+// process.env.NOW_REGION ? (module.exports = app) : app.listen(process.env.PORT);
+process.env.NOW_REGION ? (module.exports = app) : app.listen(PORT);
 console.log(`Server running at ${PORT}`);

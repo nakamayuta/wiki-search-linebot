@@ -71,7 +71,9 @@ const notArticle = (userId, word, token) => {
 
 const getDescriptionV2 = async (userId, word, option = "") => {
   // 変数宣言 -----
-  const page = await wiki.page(escape(word));
+  console.log(word);
+  console.log(escape(word));
+  const page = await wiki.page(word);
   const summary = await page.summary();
   let content = await page.content();
   let titleList = [];

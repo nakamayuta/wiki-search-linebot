@@ -75,8 +75,8 @@ const getDescriptionV2 = async (userId, word, option = "") => {
   console.log(escape(word));
   const page = await wiki.page(word);
   const summary = await page.summary();
-  const info = await page.info();
-  console.log(info);
+  // const info = await page.info();
+  // console.log(info);
   let content = await page.content();
   console.log(summary);
   console.log(content);

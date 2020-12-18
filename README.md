@@ -4,6 +4,12 @@
 
 - LINE Bot:
   https://qiita.com/n0bisuke/items/ceaa09ef8898bee8369d
+- wikijs:
+  https://co.bsnws.net/article/265
+- heroku:
+  https://jp.heroku.com/nodejs
+  https://note.com/w0o0ps/n/n2eca493ced5d
+  https://qiita.com/shti_f/items/b4b5d830672d908eff4e
 
 ### 立ち上げ方 開発用
 

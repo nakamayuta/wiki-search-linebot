@@ -2,12 +2,9 @@
 
 const express = require("express");
 const line = require("@line/bot-sdk");
-const axios = require("axios");
 const wiki = require("wikijs").default({
   apiUrl: "http://ja.wikipedia.org/w/api.php",
 });
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
 const PORT = process.env.PORT || 3000;
 
 const config = {
@@ -18,7 +15,7 @@ const config = {
 
 const app = express();
 
-app.get("/", (req, res) => res.send("Hello LINE BOT!(GET)")); //ブラウザ確認用(無くても問題ない)
+// app.get("/", (req, res) => res.send("Hello LINE BOT!(GET)")); //ブラウザ確認用(無くても問題ない)
 app.post("/webhook", line.middleware(config), (req, res) => {
   Promise.all(req.body.events.map(handleEvent))
     .then((result) => {
@@ -75,8 +72,6 @@ const getDescriptionV2 = async (userId, word, option = "") => {
   console.log(escape(word));
   const page = await wiki.page(word);
   const summary = await page.summary();
-  // const info = await page.info();
-  // console.log(info);
   let content = await page.content();
   console.log(summary);
   console.log(content);
@@ -164,6 +159,5 @@ const getDescriptionV2 = async (userId, word, option = "") => {
   });
 };
 
-// process.env.NOW_REGION ? (module.exports = app) : app.listen(process.env.PORT);
 process.env.NOW_REGION ? (module.exports = app) : app.listen(PORT);
 console.log(`Server running at ${PORT}`);

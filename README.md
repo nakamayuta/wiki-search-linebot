@@ -11,6 +11,10 @@
   - https://note.com/w0o0ps/n/n2eca493ced5d
   - https://qiita.com/shti_f/items/b4b5d830672d908eff4e
 
+### QR コード
+
+![QRコード](https://qr-official.line.me/sid/L/546sgclk.png)
+
 ### 立ち上げ方 開発用
 
 - サーバを立ち上げる

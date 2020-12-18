@@ -5,7 +5,7 @@
 - LINE Bot:
   https://qiita.com/n0bisuke/items/ceaa09ef8898bee8369d
 
-### 立ち上げ方
+### 立ち上げ方 開発用
 
 - サーバを立ち上げる
   `npm startmon`

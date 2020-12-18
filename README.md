@@ -13,7 +13,7 @@
 
 ### QR コード
 
-![QRコード](https://qr-official.line.me/sid/L/546sgclk.png)
+![QRコード](https://user-images.githubusercontent.com/51391310/102564012-ea8e8d80-411d-11eb-99d0-312b2c673ff4.png)
 
 ### 立ち上げ方 開発用
 
